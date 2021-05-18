@@ -1,0 +1,32 @@
+<div fxLayout="column" class="submission-form">
+
+  <mat-form-field appearance="outline">
+    <mat-label>Player name</mat-label>
+    <input matInput [(ngModel)]="submission.author" name="playerName" placeholder="Player name">
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Task</mat-label>
+    <mat-select [(ngModel)]="selectedTask">
+      <mat-option *ngFor="let task of tasks" [value]="task">
+        {{task.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <p *ngIf="selectedTask">Description: {{selectedTask?.description}}</p>
+  <mat-form-field appearance="outline">
+    <mat-label>Language</mat-label>
+    <mat-select [(ngModel)]="submission.language">
+      <mat-option *ngFor="let language of languages" [value]="language.value">
+        {{language.caption}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Code</mat-label>
+    <textarea matInput rows="20" [(ngModel)]="submission.code" placeholder="Code"></textarea>
+  </mat-form-field>
+
+  <button mat-button class="mat-primary" (click)="submitCode()">Submit</button>
+
+</div>
