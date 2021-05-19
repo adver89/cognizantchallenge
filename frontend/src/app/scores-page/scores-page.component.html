@@ -1,8 +1,16 @@
 <div>
   <h2>Scores board</h2>
 
+  <div class="score-header" fxLayout="row" fxLayoutAlign="space-between center">
+    <span>Player name</span>
+    <span>Score</span>
+  </div>
   <div *ngFor="let score of scores">
-    <p>{{score.authorName}} - {{score.numberOfCorrectSolutions}}</p>
+    <div class="score-entry" fxLayout="row" fxLayoutAlign="space-between center">
+      <span>{{score.authorName}}</span>
+      <span>{{score.numberOfCorrectSolutions}}</span>
+    </div>
+    <mat-divider></mat-divider>
   </div>
 </div>
 

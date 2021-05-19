@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "submissions")
 @Data
 @Builder
 @AllArgsConstructor

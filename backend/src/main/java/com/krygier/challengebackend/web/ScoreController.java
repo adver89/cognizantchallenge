@@ -19,7 +19,7 @@ public class ScoreController {
     private SubmissionDao submissionDao;
 
     @GetMapping("/scores")
-    public ResponseEntity getBestScores() {
+    public ResponseEntity<List<SubmissionProjection>> getBestScores() {
         List<SubmissionProjection> bestResults = submissionDao.getAllBest(PageRequest.of(0, 3));
         return ResponseEntity.ok(bestResults);
     }

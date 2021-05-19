@@ -21,7 +21,9 @@ export class ScoresPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.bestScoresSubscription.unsubscribe();
+    if (this.bestScoresSubscription) {
+      this.bestScoresSubscription.unsubscribe();
+    }
   }
 
 }

@@ -1,0 +1,7 @@
+<mat-hint *ngIf="field.invalid && (field.dirty || field.touched)">
+  <ng-container *ngIf="field.errors?.required">
+    Required field
+  </ng-container>
+</mat-hint>
+
+

@@ -6,7 +6,6 @@ import com.krygier.challengebackend.db.dao.TaskDao;
 import com.krygier.challengebackend.db.model.Task;
 import com.krygier.challengebackend.web.model.SubmissionDto;
 import lombok.SneakyThrows;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -18,8 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc(printOnlyOnFailure = false)
@@ -49,47 +47,51 @@ public class SubmissionIntegrationTest {
         task02.setName("Task01");
         task02.setExpectedResult("4 5 6");
         createdTask02 = taskDao.save(task02);
-
-//        taskDao.findAll().forEach(t -> System.out.println("task from db: " + t));
     }
 
     @SneakyThrows
     @Test
-    public void correctSolution() {
+    public void correctSolution_returns200AndCorrectTrue() {
 
         String requestBody = getSampleSolution(createdTask01.getId());
 
-        mockMvc.perform(post("/api/tasks")
+        mockMvc.perform(post("/api/submissions")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.correct").value("true"))
-//                .andReturn().getResponse().getContentAsString()
-        ;
+                .andExpect(jsonPath("$.correct").value("true"));
 
     }
 
     @SneakyThrows
     @Test
-    public void wrongSolutionSolution() {
+    public void wrongSolution_returns200AndCorrectFalse() {
 
         String requestBody = getSampleSolution(createdTask02.getId());
 
-        mockMvc.perform(post("/api/tasks")
+        mockMvc.perform(post("/api/submissions")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.correct").value("false"))
-//                .andReturn().getResponse().getContentAsString()
-        ;
-
+                .andExpect(jsonPath("$.correct").value("false"));
     }
 
-    @AfterAll
-    public void after() {
-        submissionDao.findAll().forEach(s -> System.out.println("submission: " + s));
+    @SneakyThrows
+    @Test
+    public void notValidInput_returns400() {
+
+        String notValidRequestBody = getSampleSolution(null);
+
+        String result = mockMvc.perform(post("/api/submissions")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(notValidRequestBody))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Request body not valid"))
+                .andReturn().getResponse().getContentAsString();
+
     }
 
     @SneakyThrows

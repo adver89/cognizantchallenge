@@ -15,13 +15,18 @@ import {MatInputModule} from '@angular/material/input';
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {MatButtonModule} from "@angular/material/button";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { ValidationMessageComponent } from './_commons/validation-message/validation-message.component';
+import {MatDividerModule} from "@angular/material/divider";
+import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     SubmissionPageComponent,
-    ScoresPageComponent
+    ScoresPageComponent,
+    ValidationMessageComponent,
+    WelcomePageComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +40,8 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     FormsModule,
     FlexLayoutModule,
     MatButtonModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDividerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,32 +1,38 @@
-<div fxLayout="column" class="submission-form">
+<form #submissionForm name="submissionForm">
+  <div fxLayout="column" class="submission-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Player name</mat-label>
+      <input matInput [(ngModel)]="submission.author" #playerName="ngModel"
+             name="playerName" required="false" placeholder="Player name">
+      <app-validation-message [field]="playerName"></app-validation-message>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Task</mat-label>
+      <mat-select [(ngModel)]="selectedTask" name="task" #task="ngModel" required>
+        <mat-option *ngFor="let task of tasks" [value]="task">
+          {{task.name}}
+        </mat-option>
+      </mat-select>
+      <app-validation-message [field]="task"></app-validation-message>
+    </mat-form-field>
+    <p *ngIf="selectedTask">Description: {{selectedTask?.description}}</p>
+    <mat-form-field appearance="outline">
+      <mat-label>Language</mat-label>
+      <mat-select [(ngModel)]="submission.language" name="language" #language="ngModel" required>
+        <mat-option *ngFor="let language of languages" [value]="language.value">
+          {{language.caption}}
+        </mat-option>
+      </mat-select>
+      <app-validation-message [field]="language"></app-validation-message>
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Player name</mat-label>
-    <input matInput [(ngModel)]="submission.author" name="playerName" placeholder="Player name">
-  </mat-form-field>
-  <mat-form-field appearance="outline">
-    <mat-label>Task</mat-label>
-    <mat-select [(ngModel)]="selectedTask">
-      <mat-option *ngFor="let task of tasks" [value]="task">
-        {{task.name}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <p *ngIf="selectedTask">Description: {{selectedTask?.description}}</p>
-  <mat-form-field appearance="outline">
-    <mat-label>Language</mat-label>
-    <mat-select [(ngModel)]="submission.language">
-      <mat-option *ngFor="let language of languages" [value]="language.value">
-        {{language.caption}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Code</mat-label>
+      <textarea matInput rows="20" [(ngModel)]="submission.code" name="code" placeholder="Code" #code="ngModel" required>
+      </textarea>
+      <app-validation-message [field]="code"></app-validation-message>
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Code</mat-label>
-    <textarea matInput rows="20" [(ngModel)]="submission.code" placeholder="Code"></textarea>
-  </mat-form-field>
-
-  <button mat-button class="mat-primary" (click)="submitCode()">Submit</button>
-
-</div>
+    <button mat-button class="mat-primary" (click)="submissionForm.checkValidity() && submitCode()">Submit</button>
+  </div>
+</form>
