@@ -1,14 +1,14 @@
 
-##Cognizant Challenge
+## Cognizant Challenge
 
 This is simple application solve algorithmic quests and track scores
 
-###Backend
+### Backend
 To run backend call:
-`mvn spring-boot:run`
+```mvn spring-boot:run```
 
-###Frontend
+### Frontend
 To run frontend Angular application call:
-`ng serve`
+```ng serve```
 
-Application is available on `http://localhost:4200`
+Application is available on ```http://localhost:4200```
